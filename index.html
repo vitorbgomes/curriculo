@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -20,7 +20,7 @@
         }
         /* Efeitos gráficos no fundo */
         .background-art {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -28,28 +28,65 @@
             overflow: hidden;
             z-index: -2;
         }
-        .background-art .shape {
+        .background-art::before {
+            content: '';
             position: absolute;
-            opacity: 0.05;
-            stroke: #3b82f6;
-            stroke-width: 2;
-            fill: none;
-            animation: float 20s infinite ease-in-out;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.1), transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.1), transparent 40%);
+            z-index: -1;
         }
-        .shape-1 {
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
+        
+        /* Animação do Gráfico de Donut */
+        .donut-chart {
+            position: absolute;
+            top: 30px;
+            left: 80px;
+            width: 150px;
+            height: 150px;
+            border: 10px solid rgba(79, 70, 229, 0.2);
+            border-radius: 50%;
+            border-top-color: rgba(56, 189, 248, 0.4);
+            border-left-color: rgba(56, 189, 248, 0.4);
+            animation: spin 12s linear infinite;
+            opacity: 0.7;
         }
-        .shape-2 {
-            bottom: 10%;
+
+        /* Animação do Gráfico de Barras */
+        .chart-bars {
+            position: absolute;
+            bottom: 5%;
             right: 5%;
-            animation-delay: -10s;
+            display: flex;
+            align-items: flex-end;
+            height: 120px;
+            opacity: 0.1;
+            transform: skewX(-20deg);
         }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        .bar {
+            width: 15px;
+            background-color: #4f46e5;
+            margin: 0 4px;
+            animation: bar-grow 3s ease-in-out infinite alternate;
+        }
+        .bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 70%; animation-delay: 0.3s; }
+        .bar:nth-child(3) { height: 50%; animation-delay: 0.6s; }
+        .bar:nth-child(4) { height: 85%; animation-delay: 0.9s; }
+        .bar:nth-child(5) { height: 30%; animation-delay: 1.2s; }
+        .bar:nth-child(6) { height: 60%; animation-delay: 1.5s; }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes bar-grow {
+            from { transform: scaleY(0.1); }
+            to { transform: scaleY(1); }
         }
 
         .text-gradient {
@@ -83,27 +120,19 @@
             border-radius: 9999px;
             display: inline-block;
         }
-        /* Estilos para o conteúdo do PDF */
-        #pdf-content {
-            font-family: 'Inter', sans-serif;
-            color: #111827;
-        }
-        #pdf-content h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem; }
-        #pdf-content h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem; }
-        #pdf-content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1rem; }
-        #pdf-content p, #pdf-content li { font-size: 1rem; line-height: 1.6; }
-        #pdf-content ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; }
-        #pdf-content .contact-info { margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
     <div class="background-art" aria-hidden="true">
-        <svg class="shape shape-1" width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 200 Q 150 50, 250 200 T 450 200" />
-        </svg>
-        <svg class="shape shape-2" width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 350 150 Q 250 300, 150 150 T -50 150" />
-        </svg>
+        <div class="donut-chart"></div>
+        <div class="chart-bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
     </div>
 
     <!-- Header -->
@@ -140,7 +169,7 @@
                     Github
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 </a>
-                 <button onclick="generatePdf()" class="bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+                 <button id="download-btn" onclick="generatePdf()" class="bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
                     Baixar PDF do Currículo
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" y2="3"/></svg>
                 </button>
@@ -386,101 +415,174 @@
             <p class="text-sm mt-8">&copy; 2024 Vitor Barbosa. Todos os direitos reservados.</p>
         </div>
     </footer>
-
-    <!-- Hidden div for PDF generation -->
-    <div id="pdf-content" class="hidden">
-        <h1>Vitor Barbosa</h1>
-        <div class="contact-info">
-            <p>Linkedin | GitHub | Portfólio</p>
-            <p>(31) 99640-4699 | vitorvb97@gmail.com</p>
-            <p>Fernão Dias – Belo Horizonte – Minas Gerais | 20/09/1998</p>
-        </div>
-
-        <h2>OBJETIVO PROFISSIONAL</h2>
-        <p>Analista de Dados</p>
-
-        <h2>RESUMO DE QUALIFICAÇÕES</h2>
-        <p>Profissional com mais de 7 anos de experiência em áreas administrativas, atualmente em transição de carreira para a área de Análise de Dados. Graduando em Análise e Desenvolvimento de Sistemas pela Multivix, e se especializando no Profissionalizante de Análise de Dados da EBAC, além disso, conta com inglês avançado. Possui perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio para transformar dados em insights acionáveis.</p>
-        <p>Minha experiência técnica em Data Analytics se estende desde a construção de pipelines de ETL, Limpeza e Governança de Dados com SQL e Python, até a criação de dashboards em Power BI. Neles, aplico Visualização de Dados e Storytelling para viabilizar uma tomada de decisão data-driven. Estou focado em expandir minhas habilidades em Automatização com APIs, Análise Preditiva e Machine Learning.</p>
-
-        <h2>FORMAÇÃO</h2>
-        <p>Graduação em Análise e Desenvolvimento de Sistemas – Tecnólogo | Multivix | Conclusão em 2027 (em andamento)</p>
-        <p>Análise de Dados – Curso livre profissionalizante | Escola Britânica de Artes Criativas e Tecnologia (EBAC) | Conclusão em 2025 (em andamento)</p>
-
-        <h2>EXPERIÊNCIA PROFISSIONAL</h2>
-        <h3>Assistente de sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Outubro/2019 - Atual</h3>
-        <ul>
-            <li>Desenvolvimento e automação de relatórios estratégicos em SQL, fornecendo à liderança painéis que reduziram o tempo de análise manual e agilizam a tomada de decisão.</li>
-            <li>Estruturação de um novo processo de auditoria de sinistros, que levou à recuperação de valores significativos anteriormente considerados como perda operacional.</li>
-            <li>Análise contínua do ciclo de vida dos processos de sinistro, identificando gargalos e propondo melhorias que otimizam o fluxo de trabalho.</li>
-            <li>Criação e execução de projetos de automação de tarefas repetitivas utilizando Python para ganho de produtividade sobre trabalhos que eram realizados de forma manual que levavam até quatro horas por dia para conclusão.</li>
-        </ul>
-        <h3>Auxiliar administrativo – Gestão de Sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Março/2018 – Outubro/2019</h3>
-        <ul>
-            <li>Apoio fundamental na reestruturação das planilhas de controle de cobrança, centralizando informações e melhorando a acurácia dos dados.</li>
-            <li>Utilização do SAP BO para extrair e consolidar dados, gerando relatórios operacionais que davam suporte às decisões da equipe.</li>
-            <li>Atuação como ponto de contato para filiais, esclarecendo dúvidas sobre processos e garantindo a padronização dos procedimentos.</li>
-            <li>Análise de processos de sinistro para cobrança de clientes.</li>
-        </ul>
-        <p>Experiências anteriores disponíveis via LinkedIn.</p>
-
-        <h2>PROJETOS RELEVANTES</h2>
-        <h3>Pipeline de Dados ETL com Python</h3>
-        <p><strong>Descrição:</strong> Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
-        <p><strong>Competências:</strong> Engenharia de Dados, ETL, Python, Pandas.</p>
-        <h3>Análise de Vendas com SQL Avançado</h3>
-        <p><strong>Descrição:</strong> Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.</p>
-        <p><strong>Competências:</strong> Análise de Dados, SQL, Modelagem de Dados, Business Intelligence.</p>
-
-        <h2>IDIOMAS</h2>
-        <p>Inglês Avançado (C1) – Certificado: EFSET</p>
-
-        <h2>COMPETÊNCIAS</h2>
-        <h3>Análise de Negócio e BI (Business Intelligence)</h3>
-        <ul>
-            <li>Análise de Dados: Definição de Métricas de Negócio e KPIs, Análise Descritiva, Modelagem de Dados.</li>
-            <li>Ferramentas de BI: Microsoft Power BI (Avançado), SAP BusinessObjects (Intermediário).</li>
-            <li>Conhecimento em: Looker, Google Data Studio (Looker Studio).</li>
-        </ul>
-        <h3>Linguagens e Bancos de Dados</h3>
-        <ul>
-            <li>Linguagens: SQL (Avançado), Python (Avançado).</li>
-            <li>Bancos de Dados: MySQL, Google BigQuery.</li>
-            <li>Bibliotecas Python: Pandas & NumPy (Manipulação de Dados), Matplotlib, Seaborn & Plotly (Visualização de Dados), Scikit-learn (Machine Learning), Selenium & Requests (Automação e Coleta de Dados).</li>
-        </ul>
-        <h3>Big Data e Machine Learning</h3>
-        <ul>
-            <li>Conceitos e Ferramentas: Hadoop, Spark, PySpark.</li>
-            <li>Modelagem Preditiva: Conhecimento em algoritmos e aplicação com Scikit-learn.</li>
-        </ul>
-        <h3>Ferramentas Corporativas e Produtividade</h3>
-        <ul>
-            <li>ERP e Processos: SAP ERP (Usuário), Pipefy (Avançado).</li>
-            <li>Planilhas: Microsoft Excel (Avançado), Google Sheets.</li>
-            <li>Outras: Pacote Office (Avançado), Adobe Photoshop (Intermediário), Ferramentas de IA Generativa (ChatGPT, Gemini, Copilot).</li>
-        </ul>
-
-        <h2>CURSOS/ATIVIDADES COMPLEMENTARES</h2>
-        <p>Power BI: Dashboards e Visualizações | EBAC | 2025 (em andamento)</p>
-        <p>Automação de Processos do Pipefy | Pipefy Academy | 2025</p>
-    </div>
     
     <script>
         function generatePdf() {
-            const element = document.getElementById('pdf-content');
-            const opt = {
-              margin:       1,
-              filename:     'Curriculo_Vitor_Barbosa.pdf',
-              image:        { type: 'jpeg', quality: 0.98 },
-              html2canvas:  { scale: 2, useCORS: true },
-              jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'p',
+                unit: 'pt',
+                format: 'a4'
+            });
+
+            const downloadBtn = document.getElementById('download-btn');
+            const originalBtnText = downloadBtn.innerHTML;
+            
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Gerando PDF...
+            `;
+
+            const resumeText = {
+                header: "Vitor Barbosa",
+                contact: [
+                    "Linkedin | GitHub | Portfólio",
+                    "(31) 99640-4699 | vitorvb97@gmail.com",
+                    "Fernão Dias – Belo Horizonte – Minas Gerais | 20/09/1998"
+                ],
+                sections: [
+                    { title: "OBJETIVO PROFISSIONAL", content: ["Analista de Dados"] },
+                    { title: "RESUMO DE QUALIFICAÇÕES", content: [
+                        "Profissional com mais de 7 anos de experiência em áreas administrativas, atualmente em transição de carreira para a área de Análise de Dados. Graduando em Análise e Desenvolvimento de Sistemas pela Multivix, e se especializando no Profissionalizante de Análise de Dados da EBAC, além disso, conta com inglês avançado. Possui perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio para transformar dados em insights acionáveis.",
+                        "Minha experiência técnica em Data Analytics se estende desde a construção de pipelines de ETL, Limpeza e Governança de Dados com SQL e Python, até a criação de dashboards em Power BI. Neles, aplico Visualização de Dados e Storytelling para viabilizar uma tomada de decisão data-driven. Estou focado em expandir minhas habilidades em Automatização com APIs, Análise Preditiva e Machine Learning."
+                    ]},
+                    { title: "FORMAÇÃO", content: [
+                        "Graduação em Análise e Desenvolvimento de Sistemas – Tecnólogo | Multivix | Conclusão em 2027 (em andamento)",
+                        "Análise de Dados – Curso livre profissionalizante | Escola Britânica de Artes Criativas e Tecnologia (EBAC) | Conclusão em 2025 (em andamento)"
+                    ]},
+                    { title: "EXPERIÊNCIA PROFISSIONAL", content: [
+                        { subtitle: "Assistente de sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Outubro/2019 - Atual",
+                          points: [
+                            "Desenvolvimento e automação de relatórios estratégicos em SQL, fornecendo à liderança painéis que reduziram o tempo de análise manual e agilizam a tomada de decisão.",
+                            "Estruturação de um novo processo de auditoria de sinistros, que levou à recuperação de valores significativos anteriormente considerados como perda operacional.",
+                            "Análise contínua do ciclo de vida dos processos de sinistro, identificando gargalos e propondo melhorias que otimizam o fluxo de trabalho.",
+                            "Criação e execução de projetos de automação de tarefas repetitivas utilizando Python para ganho de produtividade sobre trabalhos que eram realizados de forma manual que levavam até quatro horas por dia para conclusão."
+                          ]
+                        },
+                        { subtitle: "Auxiliar administrativo – Gestão de Sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Março/2018 – Outubro/2019",
+                          points: [
+                            "Apoio fundamental na reestruturação das planilhas de controle de cobrança, centralizando informações e melhorando a acurácia dos dados.",
+                            "Utilização do SAP BO para extrair e consolidar dados, gerando relatórios operacionais que davam suporte às decisões da equipe.",
+                            "Atuação como ponto de contato para filiais, esclarecendo dúvidas sobre processos e garantindo a padronização dos procedimentos.",
+                            "Análise de processos de sinistro para cobrança de clientes."
+                          ]
+                        },
+                         "Experiências anteriores disponíveis via LinkedIn."
+                    ]},
+                    { title: "PROJETOS RELEVANTES", content: [
+                        { subtitle: "Pipeline de Dados ETL com Python",
+                          points: [
+                            "Descrição: Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.",
+                            "Competências: Engenharia de Dados, ETL, Python, Pandas."
+                          ]
+                        },
+                         { subtitle: "Análise de Vendas com SQL Avançado",
+                          points: [
+                            "Descrição: Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.",
+                            "Competências: Análise de Dados, SQL, Modelagem de Dados, Business Intelligence."
+                          ]
+                        }
+                    ]},
+                    { title: "IDIOMAS", content: ["Inglês Avançado (C1) – Certificado: EFSET"] },
+                    { title: "COMPETÊNCIAS", content: [
+                        { subtitle: "Análise de Negócio e BI (Business Intelligence)",
+                          points: [
+                            "Análise de Dados: Definição de Métricas de Negócio e KPIs, Análise Descritiva, Modelagem de Dados.",
+                            "Ferramentas de BI: Microsoft Power BI (Avançado), SAP BusinessObjects (Intermediário).",
+                            "Conhecimento em: Looker, Google Data Studio (Looker Studio)."
+                          ]
+                        },
+                        { subtitle: "Linguagens e Bancos de Dados",
+                          points: [
+                            "Linguagens: SQL (Avançado), Python (Avançado).",
+                            "Bancos de Dados: MySQL, Google BigQuery.",
+                            "Bibliotecas Python: Pandas & NumPy (Manipulação de Dados), Matplotlib, Seaborn & Plotly (Visualização de Dados), Scikit-learn (Machine Learning), Selenium & Requests (Automação e Coleta de Dados)."
+                          ]
+                        },
+                        { subtitle: "Big Data e Machine Learning",
+                          points: [
+                            "Conceitos e Ferramentas: Hadoop, Spark, PySpark.",
+                            "Modelagem Preditiva: Conhecimento em algoritmos e aplicação com Scikit-learn."
+                          ]
+                        },
+                        { subtitle: "Ferramentas Corporativas e Produtividade",
+                          points: [
+                            "ERP e Processos: SAP ERP (Usuário), Pipefy (Avançado).",
+                            "Planilhas: Microsoft Excel (Avançado), Google Sheets.",
+                            "Outras: Pacote Office (Avançado), Adobe Photoshop (Intermediário), Ferramentas de IA Generativa (ChatGPT, Gemini, Copilot)."
+                          ]
+                        }
+                    ]},
+                    { title: "CURSOS/ATIVIDADES COMPLEMENTARES", content: [
+                        "Power BI: Dashboards e Visualizações | EBAC | 2025 (em andamento)",
+                        "Automação de Processos do Pipefy | Pipefy Academy | 2025"
+                    ]}
+                ]
             };
 
-            // New Promise-based usage:
-            html2pdf().set(opt).from(element).save();
+            const margin = 40;
+            let cursorY = margin;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const usableWidth = pageWidth - (margin * 2);
+
+            // Adicionar Cabeçalho
+            doc.setFontSize(24).setFont(undefined, 'bold');
+            doc.text(resumeText.header, pageWidth / 2, cursorY, { align: 'center' });
+            cursorY += 30;
+
+            doc.setFontSize(9).setFont(undefined, 'normal');
+            resumeText.contact.forEach(line => {
+                doc.text(line, pageWidth / 2, cursorY, { align: 'center' });
+                cursorY += 12;
+            });
+            cursorY += 10;
+
+            // Adicionar Seções
+            resumeText.sections.forEach(section => {
+                if (cursorY > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage();
+                    cursorY = margin;
+                }
+                doc.setFontSize(14).setFont(undefined, 'bold');
+                doc.text(section.title, margin, cursorY);
+                doc.setLineWidth(0.5);
+                doc.line(margin, cursorY + 2, pageWidth - margin, cursorY + 2);
+                cursorY += 20;
+
+                section.content.forEach(item => {
+                    if (typeof item === 'string') {
+                        doc.setFontSize(10).setFont(undefined, 'normal');
+                        const lines = doc.splitTextToSize(item, usableWidth);
+                        doc.text(lines, margin, cursorY);
+                        cursorY += lines.length * 12;
+                    } else if (typeof item === 'object') {
+                        cursorY += 5;
+                        doc.setFontSize(11).setFont(undefined, 'bold');
+                        doc.text(item.subtitle, margin, cursorY);
+                        cursorY += 15;
+                        
+                        item.points.forEach(point => {
+                             doc.setFontSize(10).setFont(undefined, 'normal');
+                             const pointLines = doc.splitTextToSize(`• ${point}`, usableWidth - 10);
+                             doc.text(pointLines, margin + 10, cursorY);
+                             cursorY += pointLines.length * 12 + 2;
+                        });
+                    }
+                    cursorY += 5;
+                });
+            });
+
+            doc.save('Curriculo_Vitor_Barbosa.pdf');
+            
+            // Restaura o botão
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = originalBtnText;
         }
     </script>
 
 </body>
 </html>
-

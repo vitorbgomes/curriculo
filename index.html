@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -16,19 +18,40 @@
             position: relative;
             overflow-x: hidden;
         }
-        /* Efeito de gradiente no fundo */
-        body::before {
-            content: '';
+        /* Efeitos gráficos no fundo */
+        .background-art {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.15), transparent 30%),
-                radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.15), transparent 30%);
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
         }
+        .background-art .shape {
+            position: absolute;
+            opacity: 0.05;
+            stroke: #3b82f6;
+            stroke-width: 2;
+            fill: none;
+            animation: float 20s infinite ease-in-out;
+        }
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        .shape-2 {
+            bottom: 10%;
+            right: 5%;
+            animation-delay: -10s;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
         .text-gradient {
             background: -webkit-linear-gradient(45deg, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
@@ -44,15 +67,44 @@
         .shadow-glow {
             box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
         }
-        .skill-icon {
-            width: 28px;
-            height: 28px;
-            margin-right: 12px;
-            flex-shrink: 0;
+        .icon-wrapper {
+            height: 56px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        .skill-tag {
+            background-color: #2d2d2d;
+            color: #f5f5f5;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+        /* Estilos para o conteúdo do PDF */
+        #pdf-content {
+            font-family: 'Inter', sans-serif;
+            color: #111827;
+        }
+        #pdf-content h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem; }
+        #pdf-content h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem; }
+        #pdf-content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1rem; }
+        #pdf-content p, #pdf-content li { font-size: 1rem; line-height: 1.6; }
+        #pdf-content ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; }
+        #pdf-content .contact-info { margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
+    <div class="background-art" aria-hidden="true">
+        <svg class="shape shape-1" width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 50 200 Q 150 50, 250 200 T 450 200" />
+        </svg>
+        <svg class="shape shape-2" width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 350 150 Q 250 300, 150 150 T -50 150" />
+        </svg>
+    </div>
 
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-sm z-50">
@@ -79,7 +131,7 @@
             <p class="mt-6 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
                 Analista de Dados com perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio.
             </p>
-            <div class="mt-8 flex justify-center gap-4">
+            <div class="mt-8 flex justify-center items-center gap-4 flex-wrap">
                 <a href="https://www.linkedin.com/in/vitor-barbosa-318816232" target="_blank" class="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
                     LinkedIn
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
@@ -88,6 +140,10 @@
                     Github
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 </a>
+                 <button onclick="generatePdf()" class="bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+                    Baixar PDF do Currículo
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" y2="3"/></svg>
+                </button>
             </div>
         </section>
 
@@ -112,92 +168,76 @@
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold">Competências</h2>
             </div>
-            <div class="max-w-5xl mx-auto space-y-12">
+            <div class="max-w-5xl mx-auto space-y-16">
                 
                 <!-- Principais Tecnologias -->
                 <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Principais Tecnologias</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.25 8.2v-1.1c0-1.3-.84-1.65-1.5-1.65H9.3c-1.1 0-1.6.83-1.6 1.6v1.1c0 .84.5 1.6 1.6 1.6h2.2v.9h-1.6c-.83 0-1.52.5-1.52 1.52v2.1c0 1.02.7 1.52 1.52 1.52h1.6v.9h-2.2c-1.1 0-1.6.8-1.6 1.6v1.1c0 .8.5 1.6 1.6 1.6h5.45c1.3 0 1.65-.84 1.65-1.5v-1.1c0-.8-.83-1.6-1.6-1.6h-2.2v-.9h1.6c.83 0 1.52-.5-1.52-1.52v-2.1c0-1.02-.7-1.52-1.52-1.52h-1.6v-.9h2.2c1.1 0 1.6-.8 1.6-1.6z" fill="#306998"/><path d="M16.25 15.8v1.1c0 1.3.84 1.65 1.5 1.65h5.45c1.1 0 1.6-.83 1.6-1.6v-1.1c0-.84-.5-1.6-1.6-1.6h-2.2v-.9h1.6c.83 0 1.52-.5-1.52-1.52v-2.1c0-1.02-.7-1.52-1.52-1.52h-1.6v-.9h2.2c1.1 0 1.6-.8 1.6-1.6V8.2c0-.8-.5-1.6-1.6-1.6h-5.45c-1.3 0-1.65.84-1.65 1.5v1.1c0 .8.83 1.6 1.6 1.6h2.2v.9h-1.6c-.83 0-1.52.5-1.52 1.52v2.1c0 1.02.7 1.52 1.52 1.52h1.6v.9h-2.2c-1.1 0-1.6.8-1.6 1.6z" fill="#FFD43B"/></svg>
-                            <p class="text-gray-300"><strong>Python</strong> (Avançado)</p>
-                        </div>
-                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 8H18V4.4A2.4 2.4 0 0 0 15.6 2H8.4A2.4 2.4 0 0 0 6 4.4V8H2.4A2.4 2.4 0 0 0 0 10.4v5.2A2.4 2.4 0 0 0 2.4 18H6v3.6a2.4 2.4 0 0 0 2.4 2.4h7.2a2.4 2.4 0 0 0 2.4-2.4V18h3.6a2.4 2.4 0 0 0 2.4-2.4v-5.2A2.4 2.4 0 0 0 21.6 8zM8 4.4a.4.4 0 0 1 .4-.4h7.2a.4.4 0 0 1 .4.4V8H8V4.4zm8 15.2a.4.4 0 0 1-.4.4H8.4a.4.4 0 0 1-.4-.4V18h8v1.6z" fill="#4285F4"/><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="#EA4335"/><path d="M12 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" fill="#FBBC05"/><path d="M12 12a4 4 0 1 0-8 0 4 4 0 0 0 8 0z" fill="#34A853"/><path d="M12 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0z" fill="#4285F4"/></svg>
-                            <p class="text-gray-300"><strong>GCP BigQuery</strong></p>
-                        </div>
-                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h8.33v8.33H3V3m0 9.67h8.33V21H3v-8.33M12.67 3H21v5.5H12.67V3m0 6.5H21v9.83H12.67V9.5z" fill="#F2C811"/></svg>
-                            <p class="text-gray-300"><strong>Power BI</strong> (Avançado)</p>
-                        </div>
-                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                             <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.4 2H9.6a.6.6 0 0 0-.6.6v20.8a.6.6 0 0 0 .6.6h4.8a.6.6 0 0 0 .6-.6V2.6a.6.6 0 0 0-.6-.6z" fill="#4285F4"/><path d="M21.4 6H2.6a.6.6 0 0 0-.6.6v4.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6V6.6a.6.6 0 0 0-.6-.6z" fill="#EA4335"/><path d="M21.4 12.6H2.6a.6.6 0 0 0-.6.6v4.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6v-4.8a.6.6 0 0 0-.6-.6z" fill="#FBBC05"/></svg>
-                            <p class="text-gray-300"><strong>Looker Studio</strong> (Conhecimento)</p>
-                        </div>
-                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                             <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="excel-a" x1="7.533" x2="7.533" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient><linearGradient id="excel-b" x1="12.016" x2="12.016" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient><linearGradient id="excel-c" x1="16.467" x2="16.467" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient></defs><path fill="#107c41" d="M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.535-1.465C2 19.072 2 16.714 2 12s0-7.071 1.465-8.535C4.928 2 7.286 2 12 2s7.071 0 8.535 1.465C22 4.928 22 7.286 22 12Z"/><path fill="#fff" d="m14.5 12.25-3.53-6.2H8.2l3.53 6.2-3.53 6.2h2.77l2.2-3.86 2.2 3.86h2.77l-3.54-6.2 3.54-6.2h-2.77Z"/><path d="M7.533 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-a)" d="M5.166 10.82V2H10v8.82z"/><path d="M12.016 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-b)" d="M9.649 10.82V2h4.834v8.82z"/><path d="M16.467 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-c)" d="M14.1 10.82V2h4.834v8.82z"/></svg>
-                            <p class="text-gray-300"><strong>Microsoft Excel</strong> (Avançado)</p>
-                        </div>
-                         <div class="bg-card border border-card rounded-lg p-4 flex items-center">
-                            <svg class="skill-icon text-blue-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.63 16.44a1.05 1.05 0 0 0 1.08.73c.42 0 .78-.23.96-.6l1.06-2.1c.39-.78.96-1.25 1.7-1.4v3.13c-.9.27-1.55.9-1.55 1.84 0 1.05.85 1.9 1.9 1.9s1.9-.85 1.9-1.9c0-.94-.65-1.57-1.55-1.84V9.8c.9-.23 1.55-.86 1.55-1.84 0-1.05-.85-1.9-1.9-1.9s-1.9.85-1.9 1.9c0 .98.65 1.61 1.55 1.84v2.8c-.74.15-1.3.62-1.7 1.4l-1.06 2.1c-.18.37-.54.6-.96.6a1.05 1.05 0 0 0-1.08.73zM19.37 8.56a1.05 1.05 0 0 0-1.08-.73c-.42 0-.78.23-.96.6l-1.06 2.1c-.4.78-.96 1.25-1.7 1.4V9.8c.9-.23 1.55-.86 1.55-1.84 0-1.05-.85-1.9-1.9-1.9s-1.9.85-1.9 1.9c0 .98.65 1.61 1.55 1.84v4.3c-.9.27-1.55.9-1.55 1.84 0 1.05.85 1.9 1.9 1.9s1.9-.85 1.9-1.9c0-.94-.65-1.57-1.55-1.84v-2.8c.74-.15 1.3-.62 1.7-1.4l1.06-2.1c.18-.37-.54-.6-.96-.6a1.05 1.05 0 0 0 1.08-.73z"/></svg>
-                            <p class="text-gray-300"><strong>SQL</strong> (Avançado)</p>
+                    <h3 class="text-2xl font-semibold text-center mb-8 text-gradient">Principais Tecnologias</h3>
+                    <div class="bg-card border border-card rounded-xl p-8 shadow-glow">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><i class="devicon-python-plain colored text-5xl"></i></div>
+                                <p class="font-semibold">Python</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><i class="devicon-googlecloud-plain colored text-5xl"></i></div>
+                                <p class="font-semibold">GCP BigQuery</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><img alt="Power BI" class="w-12 h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg"/></div>
+                                <p class="font-semibold">Power BI</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><i class="devicon-google-plain colored text-5xl"></i></div>
+                                <p class="font-semibold">Looker Studio</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><img alt="Excel" class="w-12 h-12 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg"/></div>
+                                <p class="font-semibold">Microsoft Excel</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="icon-wrapper"><i class="devicon-mysql-plain colored text-5xl"></i></div>
+                                <p class="font-semibold">SQL</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Análise de Negócio e BI -->
+                <!-- Outras Competências -->
                 <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Análise de Negócio e BI</h3>
-                    <div class="bg-card border border-card rounded-xl p-6">
-                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
-                            <li>Definição de Métricas de Negócio e KPIs</li>
-                            <li>Análise Descritiva</li>
-                            <li>Modelagem de Dados</li>
-                            <li>SAP BusinessObjects (Intermediário)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Linguagens e Bancos de Dados -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Linguagens e Bancos de Dados</h3>
-                     <div class="bg-card border border-card rounded-xl p-6">
-                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
-                           <li>MySQL</li>
-                        </ul>
-                    </div>
-                </div>
-                 <!-- Bibliotecas Python -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Bibliotecas Python</h3>
-                    <div class="bg-card border border-card rounded-xl p-6">
-                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
-                            <li>Pandas & NumPy (Manipulação de Dados)</li>
-                            <li>Matplotlib, Seaborn & Plotly (Visualização)</li>
-                            <li>Scikit-learn (Machine Learning)</li>
-                            <li>Selenium & Requests (Automação e Coleta)</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Big Data e Machine Learning -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Big Data e Machine Learning</h3>
-                     <div class="bg-card border border-card rounded-xl p-6">
-                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
-                           <li>Conceitos e Ferramentas: Hadoop, Spark, PySpark.</li>
-                           <li>Modelagem Preditiva: Conhecimento em algoritmos e aplicação com Scikit-learn.</li>
-                        </ul>
-                    </div>
-                </div>
-                 <!-- Ferramentas Corporativas e Produtividade -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Ferramentas Corporativas e Produtividade</h3>
-                     <div class="bg-card border border-card rounded-xl p-6">
-                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
-                            <li>ERP e Processos: SAP ERP (Usuário), Pipefy (Avançado).</li>
-                            <li>Planilhas: Google Sheets.</li>
-                            <li>Outras: Pacote Office (Avançado), Adobe Photoshop (Intermediário), Ferramentas de IA Generativa (ChatGPT, Gemini, Copilot).</li>
-                        </ul>
+                    <h3 class="text-2xl font-semibold text-center mb-8 text-gradient">Outras Competências</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2 text-center">Análise de Dados</h4>
+                            <div class="flex flex-wrap gap-2 justify-center">
+                                <span class="skill-tag">Definição de Métricas e KPIs</span>
+                                <span class="skill-tag">Análise Descritiva</span>
+                                <span class="skill-tag">Modelagem de Dados</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mt-6 mb-2 text-center">Ferramentas e Bibliotecas</h4>
+                            <div class="flex flex-wrap gap-2 justify-center">
+                                <span class="skill-tag">SAP BusinessObjects (Intermediário)</span>
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">Pandas & NumPy</span>
+                                <span class="skill-tag">Matplotlib, Seaborn & Plotly</span>
+                                <span class="skill-tag">Scikit-learn</span>
+                                <span class="skill-tag">Selenium & Requests</span>
+                                <span class="skill-tag">Hadoop</span>
+                                <span class="skill-tag">Spark / PySpark</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mt-6 mb-2 text-center">Outras Habilidades</h4>
+                            <div class="flex flex-wrap gap-2 justify-center">
+                                <span class="skill-tag">SAP ERP</span>
+                                <span class="skill-tag">Pipefy (Avançado)</span>
+                                <span class="skill-tag">Google Sheets</span>
+                                <span class="skill-tag">Adobe Photoshop (Intermediário)</span>
+                                <span class="skill-tag">IA Generativa (ChatGPT, Gemini)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -346,6 +386,101 @@
             <p class="text-sm mt-8">&copy; 2024 Vitor Barbosa. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <!-- Hidden div for PDF generation -->
+    <div id="pdf-content" class="hidden">
+        <h1>Vitor Barbosa</h1>
+        <div class="contact-info">
+            <p>Linkedin | GitHub | Portfólio</p>
+            <p>(31) 99640-4699 | vitorvb97@gmail.com</p>
+            <p>Fernão Dias – Belo Horizonte – Minas Gerais | 20/09/1998</p>
+        </div>
+
+        <h2>OBJETIVO PROFISSIONAL</h2>
+        <p>Analista de Dados</p>
+
+        <h2>RESUMO DE QUALIFICAÇÕES</h2>
+        <p>Profissional com mais de 7 anos de experiência em áreas administrativas, atualmente em transição de carreira para a área de Análise de Dados. Graduando em Análise e Desenvolvimento de Sistemas pela Multivix, e se especializando no Profissionalizante de Análise de Dados da EBAC, além disso, conta com inglês avançado. Possui perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio para transformar dados em insights acionáveis.</p>
+        <p>Minha experiência técnica em Data Analytics se estende desde a construção de pipelines de ETL, Limpeza e Governança de Dados com SQL e Python, até a criação de dashboards em Power BI. Neles, aplico Visualização de Dados e Storytelling para viabilizar uma tomada de decisão data-driven. Estou focado em expandir minhas habilidades em Automatização com APIs, Análise Preditiva e Machine Learning.</p>
+
+        <h2>FORMAÇÃO</h2>
+        <p>Graduação em Análise e Desenvolvimento de Sistemas – Tecnólogo | Multivix | Conclusão em 2027 (em andamento)</p>
+        <p>Análise de Dados – Curso livre profissionalizante | Escola Britânica de Artes Criativas e Tecnologia (EBAC) | Conclusão em 2025 (em andamento)</p>
+
+        <h2>EXPERIÊNCIA PROFISSIONAL</h2>
+        <h3>Assistente de sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Outubro/2019 - Atual</h3>
+        <ul>
+            <li>Desenvolvimento e automação de relatórios estratégicos em SQL, fornecendo à liderança painéis que reduziram o tempo de análise manual e agilizam a tomada de decisão.</li>
+            <li>Estruturação de um novo processo de auditoria de sinistros, que levou à recuperação de valores significativos anteriormente considerados como perda operacional.</li>
+            <li>Análise contínua do ciclo de vida dos processos de sinistro, identificando gargalos e propondo melhorias que otimizam o fluxo de trabalho.</li>
+            <li>Criação e execução de projetos de automação de tarefas repetitivas utilizando Python para ganho de produtividade sobre trabalhos que eram realizados de forma manual que levavam até quatro horas por dia para conclusão.</li>
+        </ul>
+        <h3>Auxiliar administrativo – Gestão de Sinistros | Localiza - L&CO (Belo Horizonte/Minas Gerais) | Março/2018 – Outubro/2019</h3>
+        <ul>
+            <li>Apoio fundamental na reestruturação das planilhas de controle de cobrança, centralizando informações e melhorando a acurácia dos dados.</li>
+            <li>Utilização do SAP BO para extrair e consolidar dados, gerando relatórios operacionais que davam suporte às decisões da equipe.</li>
+            <li>Atuação como ponto de contato para filiais, esclarecendo dúvidas sobre processos e garantindo a padronização dos procedimentos.</li>
+            <li>Análise de processos de sinistro para cobrança de clientes.</li>
+        </ul>
+        <p>Experiências anteriores disponíveis via LinkedIn.</p>
+
+        <h2>PROJETOS RELEVANTES</h2>
+        <h3>Pipeline de Dados ETL com Python</h3>
+        <p><strong>Descrição:</strong> Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
+        <p><strong>Competências:</strong> Engenharia de Dados, ETL, Python, Pandas.</p>
+        <h3>Análise de Vendas com SQL Avançado</h3>
+        <p><strong>Descrição:</strong> Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.</p>
+        <p><strong>Competências:</strong> Análise de Dados, SQL, Modelagem de Dados, Business Intelligence.</p>
+
+        <h2>IDIOMAS</h2>
+        <p>Inglês Avançado (C1) – Certificado: EFSET</p>
+
+        <h2>COMPETÊNCIAS</h2>
+        <h3>Análise de Negócio e BI (Business Intelligence)</h3>
+        <ul>
+            <li>Análise de Dados: Definição de Métricas de Negócio e KPIs, Análise Descritiva, Modelagem de Dados.</li>
+            <li>Ferramentas de BI: Microsoft Power BI (Avançado), SAP BusinessObjects (Intermediário).</li>
+            <li>Conhecimento em: Looker, Google Data Studio (Looker Studio).</li>
+        </ul>
+        <h3>Linguagens e Bancos de Dados</h3>
+        <ul>
+            <li>Linguagens: SQL (Avançado), Python (Avançado).</li>
+            <li>Bancos de Dados: MySQL, Google BigQuery.</li>
+            <li>Bibliotecas Python: Pandas & NumPy (Manipulação de Dados), Matplotlib, Seaborn & Plotly (Visualização de Dados), Scikit-learn (Machine Learning), Selenium & Requests (Automação e Coleta de Dados).</li>
+        </ul>
+        <h3>Big Data e Machine Learning</h3>
+        <ul>
+            <li>Conceitos e Ferramentas: Hadoop, Spark, PySpark.</li>
+            <li>Modelagem Preditiva: Conhecimento em algoritmos e aplicação com Scikit-learn.</li>
+        </ul>
+        <h3>Ferramentas Corporativas e Produtividade</h3>
+        <ul>
+            <li>ERP e Processos: SAP ERP (Usuário), Pipefy (Avançado).</li>
+            <li>Planilhas: Microsoft Excel (Avançado), Google Sheets.</li>
+            <li>Outras: Pacote Office (Avançado), Adobe Photoshop (Intermediário), Ferramentas de IA Generativa (ChatGPT, Gemini, Copilot).</li>
+        </ul>
+
+        <h2>CURSOS/ATIVIDADES COMPLEMENTARES</h2>
+        <p>Power BI: Dashboards e Visualizações | EBAC | 2025 (em andamento)</p>
+        <p>Automação de Processos do Pipefy | Pipefy Academy | 2025</p>
+    </div>
     
+    <script>
+        function generatePdf() {
+            const element = document.getElementById('pdf-content');
+            const opt = {
+              margin:       1,
+              filename:     'Curriculo_Vitor_Barbosa.pdf',
+              image:        { type: 'jpeg', quality: 0.98 },
+              html2canvas:  { scale: 2, useCORS: true },
+              jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            // New Promise-based usage:
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
 </body>
 </html>
+

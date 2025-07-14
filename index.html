@@ -1,239 +1,351 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currículo - Vitor Barbosa</title>
+    <title>Vitor Barbosa - Analista de Dados</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Biblioteca para gerar PDF a partir de HTML -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #F5F5F5;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Efeito de gradiente no fundo */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.15), transparent 30%),
+                radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.15), transparent 30%);
+            z-index: -1;
+        }
+        .text-gradient {
+            background: -webkit-linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-card {
+            background-color: rgba(28, 28, 28, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .border-card {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .shadow-glow {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+        .skill-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+            flex-shrink: 0;
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
 
-    <div id="page-container" class="container mx-auto max-w-4xl p-4 sm:p-8">
-        <!-- Botão para gerar o PDF -->
-        <div class="text-right mb-4">
-            <button id="download-button" onclick="generatePdf()" class="bg-blue-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 flex items-center gap-2 ml-auto disabled:bg-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                <span>Baixar PDF</span>
-            </button>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-sm z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-gradient">Vitor Barbosa</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-300 hover:text-white transition-colors">Sobre</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition-colors">Competências</a>
+                <a href="#experience" class="text-gray-300 hover:text-white transition-colors">Experiência</a>
+                <a href="#projects" class="text-gray-300 hover:text-white transition-colors">Projetos</a>
+            </nav>
+            <a href="#footer" class="hidden md:inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                Contato
+            </a>
         </div>
+    </header>
 
-        <!-- Conteúdo do Currículo que será convertido para PDF -->
-        <div id="resume-content" class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="md:flex">
-                <!-- Coluna da Esquerda (Sidebar) -->
-                <aside class="md:w-1/3 bg-gray-800 text-white p-8">
-                    <div class="flex flex-col items-center md:items-start">
-                        <h1 class="text-3xl font-bold text-white text-center md:text-left">Vitor Barbosa</h1>
-                        <p class="text-lg text-blue-300 mt-1">Analista de Dados</p>
-                    </div>
-
-                    <div class="mt-8">
-                        <h2 class="text-xl font-semibold border-b-2 border-blue-400 pb-2 mb-4">Contato</h2>
-                        <ul class="space-y-3 text-sm">
-                            <li class="flex items-center gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><path d="M21.2 8.4c.5.38.8.97.8 1.6v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7c0-.63.3-1.22.8-1.6L12 4l9.2 4.4Z"/><path d="m22 7-8.97 4.3a2 2 0 0 1-2.06 0L2 7"/></svg>
-                                <a href="mailto:vitorvb97@gmail.com" class="hover:text-blue-300 transition-colors">vitorvb97@gmail.com</a>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                <span>+55 31 99640-4699</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 flex-shrink-0 mt-0.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                                <a href="https://www.linkedin.com/in/vitor-barbosa-318816232" target="_blank" class="inline-flex items-center gap-1.5 hover:text-blue-300 hover:underline transition-colors">
-                                    <span>Perfil no LinkedIn</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                                </a>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 flex-shrink-0 mt-0.5"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                                <a href="https://github.com/vitorbgomes" target="_blank" class="inline-flex items-center gap-1.5 hover:text-blue-300 hover:underline transition-colors">
-                                    <span>Portfólio no Github</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                                </a>
-                            </li>
-                             <li class="flex items-center gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <span>Fernão Dias – Belo Horizonte – MG</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="mt-8">
-                        <h2 class="text-xl font-semibold border-b-2 border-blue-400 pb-2 mb-4">Competências</h2>
-                        <div class="space-y-4 text-sm">
-                            <div>
-                                <h3 class="font-bold text-blue-300 mb-1">Análise e Visualização de Dados</h3>
-                                <p>Microsoft Excel (Avançado), Power BI (Avançado), Modelagem de Dados, Estatística Descritiva.</p>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-blue-300 mb-1">Linguagens</h3>
-                                <p>SQL (Avançado), Python (Avançado, com bibliotecas Pandas, Selenium, Requests e Matplotlib).</p>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-blue-300 mb-1">Ferramentas de BI & ERP</h3>
-                                <p>SAP BusinessObjects (Intermediário), SAP ERP (Usuário), GCP BigQuery, MySQL (Intermediário).</p>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-blue-300 mb-1">Outras Ferramentas</h3>
-                                <p>Adobe Photoshop (Intermediário), Pacote Office - Word, PowerPoint (Intermediário), Inteligências Artificiais – Copilot, Gemini, ChatGPT.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8">
-                        <h2 class="text-xl font-semibold border-b-2 border-blue-400 pb-2 mb-4">Formação</h2>
-                        <ul class="space-y-4 text-sm">
-                            <li>
-                                <p class="font-bold">Graduação em Análise e Desenv. de Sistemas</p>
-                                <p class="text-gray-300">Multivix (Conclusão em 2027)</p>
-                            </li>
-                            <li>
-                                <p class="font-bold">Análise de Dados</p>
-                                <p class="text-gray-300">EBAC (Conclusão em 2025)</p>
-                            </li>
-                             <li>
-                                <p class="font-bold">Ensino Médio Técnico Integrado</p>
-                                <p class="text-gray-300">Instituto Federal Fluminense (2017)</p>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-8">
-                        <h2 class="text-xl font-semibold border-b-2 border-blue-400 pb-2 mb-4">Idiomas</h2>
-                        <p class="text-sm">Inglês Avançado (C1) – 
-                            <a href="https://cert.efset.org/pt/4Uj8Xf" target="_blank" class="inline-flex items-center gap-1.5 hover:text-blue-300 hover:underline transition-colors">
-                                <span>Certificado EFSET</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                            </a>
-                        </p>
-                    </div>
-
-                </aside>
-
-                <!-- Coluna da Direita (Conteúdo Principal) -->
-                <main class="w-full p-8">
-                    <section>
-                        <h2 class="text-2xl font-bold text-gray-700 border-b-2 border-gray-200 pb-2 mb-4">Resumo de Qualificações</h2>
-                        <p class="text-gray-600 leading-relaxed mb-4">
-                            Busco uma oportunidade como Analista de Dados, onde eu possa aplicar meu perfil analítico e minha sólida experiência em otimização de processos de negócio para extrair insights e gerar valor a partir de dados, contribuindo diretamente para a tomada de decisões estratégicas da empresa.
-                        </p>
-                        <p class="text-gray-600 leading-relaxed">
-                            Profissional com mais de 7 anos de experiência corporativa, atualmente em transição de carreira para a área de Análise de Dados. Sólida vivência em gestão de sinistros, auditoria e otimização de processos na Localiza, onde desenvolvi relatórios gerenciais e ferramentas de automação que resultaram em ganhos de eficiência e recuperação financeira. Possuo um perfil analítico, proativo e com forte habilidade para transformar dados brutos em insights acionáveis. Aprofundando conhecimentos em Power BI, SQL e Python para resolver problemas de negócio complexos.
-                        </p>
-                    </section>
-
-                    <section class="mt-8">
-                        <h2 class="text-2xl font-bold text-gray-700 border-b-2 border-gray-200 pb-2 mb-4">Experiência Profissional</h2>
-                        <div class="space-y-6">
-                            <div>
-                                <div class="flex justify-between items-baseline">
-                                    <h3 class="text-lg font-semibold text-gray-800">Assistente de sinistros</h3>
-                                    <p class="text-sm text-gray-500">Outubro/2019 - Atual</p>
-                                </div>
-                                <p class="text-md text-gray-600">Localiza - L&CO (Belo Horizonte/Minas Gerais)</p>
-                                <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1 leading-relaxed">
-                                    <li>Desenvolvimento e automação de relatórios estratégicos em SQL, fornecendo à liderança painéis que reduziram o tempo de análise manual e agilizaram a tomada de decisão.</li>
-                                    <li>Estruturação de um novo processo de auditoria de sinistros, que levou à recuperação de valores significativos anteriormente considerados como perda operacional.</li>
-                                    <li>Análise contínua do ciclo de vida dos processos de sinistro, identificando gargalos e propondo melhorias que otimizaram o fluxo de trabalho.</li>
-                                    <li>Criação e execução de projetos de automação de tarefas repetitivas utilizando Python para ganho de produtividade sobre trabalhos que eram realizados de forma manual que levavam até quatro horas por dia para conclusão.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-baseline">
-                                    <h3 class="text-lg font-semibold text-gray-800">Auxiliar administrativo – Gestão de Sinistros</h3>
-                                    <p class="text-sm text-gray-500">Março/2018 – Outubro 2019</p>
-                                </div>
-                                <p class="text-md text-gray-600">Localiza - L&CO (Belo Horizonte/Minas Gerais)</p>
-                                <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1 leading-relaxed">
-                                    <li>Apoio fundamental na reestruturação das planilhas de controle de cobrança, centralizando informações e melhorando a acurácia dos dados.</li>
-                                    <li>Utilização do SAP BO para extrair e consolidar dados, gerando relatórios operacionais que davam suporte às decisões da equipe.</li>
-                                    <li>Atuação como ponto de contato para filiais, esclarecendo dúvidas sobre processos e garantindo a padronização dos procedimentos.</li>
-                                    <li>Análise de processos de sinistro para cobrança de cliente.</li>
-                                </ul>
-                            </div>
-                             <div>
-                                <div class="flex justify-between items-baseline">
-                                    <h3 class="text-lg font-semibold text-gray-800">Auxiliar administrativo – Gestão de Sinistros</h3>
-                                    <p class="text-sm text-gray-500">Fevereiro 2017/Novembro 2017</p>
-                                </div>
-                                <p class="text-md text-gray-600">A. W. Produtos Dietéticos LTDA - Nutri&Grãos (Rio das Ostras/Rio de Janeiro)</p>
-                                <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1 leading-relaxed">
-                                    <li>Responsável pelo atendimento ao cliente, controle de caixa e gestão de estoque.</li>
-                                    <li>Apoio em rotinas financeiras, como contas a pagar/receber e conciliação bancária.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <section class="mt-8">
-                        <h2 class="text-2xl font-bold text-gray-700 border-b-2 border-gray-200 pb-2 mb-4">Projetos Relevantes</h2>
-                        <div class="space-y-6">
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Pipeline de Dados ETL com Python e IA Generativa</h3>
-                                <a href="https://github.com/vitorbgomes/Analise_Dados_Python" target="_blank" class="text-sm text-blue-500 hover:underline">github.com/vitorbgomes/Analise_Dados_Python</a>
-                                <p class="mt-2 text-gray-600 leading-relaxed">Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
-                                <p class="mt-1"><span class="font-semibold">Competências:</span> Engenharia de Dados, ETL, Python, Pandas.</p>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Análise de Vendas com SQL Avançado</h3>
-                                <a href="https://github.com/vitorbgomes/Analise_Dados_SQL" target="_blank" class="text-sm text-blue-500 hover:underline">github.com/vitorbgomes/Analise_Dados_SQL</a>
-                                <p class="mt-2 text-gray-600 leading-relaxed">Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.</p>
-                                <p class="mt-1"><span class="font-semibold">Competências:</span> Análise de Dados, SQL, Modelagem de Dados, Business Intelligence.</p>
-                            </div>
-                        </div>
-                    </section>
-                </main>
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section id="home" class="container mx-auto px-6 py-16 md:py-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                Transformando <span class="text-gradient">Dados</span> em Decisões Estratégicas
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+                Analista de Dados com perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio.
+            </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="https://www.linkedin.com/in/vitor-barbosa-318816232" target="_blank" class="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                    LinkedIn
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </a>
+                <a href="https://github.com/vitorbgomes" target="_blank" class="bg-gray-700 text-white py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2">
+                    Github
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </a>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <script>
-        function generatePdf() {
-            // Pega os elementos
-            const container = document.getElementById('page-container');
-            const element = document.getElementById('resume-content');
-            const button = document.getElementById('download-button');
-            const buttonText = button.querySelector('span');
-
-            // Desabilita o botão e mostra o status de carregamento
-            button.disabled = true;
-            buttonText.textContent = 'Gerando PDF...';
-
-            // --- Solução para o problema de recorte ---
-            // 1. Remove temporariamente a centralização para alinhar o elemento à esquerda
-            container.classList.remove('mx-auto');
-            
-            // Opções para o html2pdf
-            const opt = {
-                margin:       0,
-                filename:     'Curriculo-Vitor-Barbosa.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'px', format: [element.offsetWidth, element.offsetHeight], orientation: 'portrait' }
-            };
-
-            // Gera o PDF a partir do elemento agora alinhado à esquerda
-            html2pdf().from(element).set(opt).save().then(() => {
-                // 2. Restaura a classe de centralização após a geração do PDF
-                container.classList.add('mx-auto');
+        <!-- About Section -->
+        <section id="about" class="container mx-auto px-6 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Resumo de Qualificações</h2>
+                 <p class="text-gray-400 mt-2">Meu perfil e objetivo profissional.</p>
+            </div>
+            <div class="max-w-4xl mx-auto bg-card border border-card rounded-xl p-8 shadow-glow">
+                <p class="text-gray-300 leading-relaxed">
+                   Profissional com mais de 7 anos de experiência em áreas administrativas, atualmente em transição de carreira para a área de Análise de Dados. Graduando em Análise e Desenvolvimento de Sistemas pela Multivix, e se especializando no Profissionalizante de Análise de Dados da EBAC, além disso, conta com inglês avançado. Possui perfil analítico, proatividade e foco em resolução de problemas, aliando conhecimento técnico e visão de negócio para transformar dados em insights acionáveis.
+                </p>
+                <p class="text-gray-300 leading-relaxed mt-4">
+                    Minha experiência técnica em Data Analytics se estende desde a construção de pipelines de ETL, Limpeza e Governança de Dados com SQL e Python, até a criação de dashboards em Power BI. Neles, aplico Visualização de Dados e Storytelling para viabilizar uma tomada de decisão data-driven. Estou focado em expandir minhas habilidades em Automatização com APIs, Análise Preditiva e Machine Learning.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="container mx-auto px-6 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Competências</h2>
+            </div>
+            <div class="max-w-5xl mx-auto space-y-12">
                 
-                // Reativa o botão
-                buttonText.textContent = 'Baixar PDF';
-                button.disabled = false;
-            });
-        }
-    </script>
+                <!-- Principais Tecnologias -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Principais Tecnologias</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.25 8.2v-1.1c0-1.3-.84-1.65-1.5-1.65H9.3c-1.1 0-1.6.83-1.6 1.6v1.1c0 .84.5 1.6 1.6 1.6h2.2v.9h-1.6c-.83 0-1.52.5-1.52 1.52v2.1c0 1.02.7 1.52 1.52 1.52h1.6v.9h-2.2c-1.1 0-1.6.8-1.6 1.6v1.1c0 .8.5 1.6 1.6 1.6h5.45c1.3 0 1.65-.84 1.65-1.5v-1.1c0-.8-.83-1.6-1.6-1.6h-2.2v-.9h1.6c.83 0 1.52-.5-1.52-1.52v-2.1c0-1.02-.7-1.52-1.52-1.52h-1.6v-.9h2.2c1.1 0 1.6-.8 1.6-1.6z" fill="#306998"/><path d="M16.25 15.8v1.1c0 1.3.84 1.65 1.5 1.65h5.45c1.1 0 1.6-.83 1.6-1.6v-1.1c0-.84-.5-1.6-1.6-1.6h-2.2v-.9h1.6c.83 0 1.52-.5-1.52-1.52v-2.1c0-1.02-.7-1.52-1.52-1.52h-1.6v-.9h2.2c1.1 0 1.6-.8 1.6-1.6V8.2c0-.8-.5-1.6-1.6-1.6h-5.45c-1.3 0-1.65.84-1.65 1.5v1.1c0 .8.83 1.6 1.6 1.6h2.2v.9h-1.6c-.83 0-1.52.5-1.52 1.52v2.1c0 1.02.7 1.52 1.52 1.52h1.6v.9h-2.2c-1.1 0-1.6.8-1.6 1.6z" fill="#FFD43B"/></svg>
+                            <p class="text-gray-300"><strong>Python</strong> (Avançado)</p>
+                        </div>
+                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 8H18V4.4A2.4 2.4 0 0 0 15.6 2H8.4A2.4 2.4 0 0 0 6 4.4V8H2.4A2.4 2.4 0 0 0 0 10.4v5.2A2.4 2.4 0 0 0 2.4 18H6v3.6a2.4 2.4 0 0 0 2.4 2.4h7.2a2.4 2.4 0 0 0 2.4-2.4V18h3.6a2.4 2.4 0 0 0 2.4-2.4v-5.2A2.4 2.4 0 0 0 21.6 8zM8 4.4a.4.4 0 0 1 .4-.4h7.2a.4.4 0 0 1 .4.4V8H8V4.4zm8 15.2a.4.4 0 0 1-.4.4H8.4a.4.4 0 0 1-.4-.4V18h8v1.6z" fill="#4285F4"/><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="#EA4335"/><path d="M12 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" fill="#FBBC05"/><path d="M12 12a4 4 0 1 0-8 0 4 4 0 0 0 8 0z" fill="#34A853"/><path d="M12 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0z" fill="#4285F4"/></svg>
+                            <p class="text-gray-300"><strong>GCP BigQuery</strong></p>
+                        </div>
+                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                            <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h8.33v8.33H3V3m0 9.67h8.33V21H3v-8.33M12.67 3H21v5.5H12.67V3m0 6.5H21v9.83H12.67V9.5z" fill="#F2C811"/></svg>
+                            <p class="text-gray-300"><strong>Power BI</strong> (Avançado)</p>
+                        </div>
+                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                             <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.4 2H9.6a.6.6 0 0 0-.6.6v20.8a.6.6 0 0 0 .6.6h4.8a.6.6 0 0 0 .6-.6V2.6a.6.6 0 0 0-.6-.6z" fill="#4285F4"/><path d="M21.4 6H2.6a.6.6 0 0 0-.6.6v4.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6V6.6a.6.6 0 0 0-.6-.6z" fill="#EA4335"/><path d="M21.4 12.6H2.6a.6.6 0 0 0-.6.6v4.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6v-4.8a.6.6 0 0 0-.6-.6z" fill="#FBBC05"/></svg>
+                            <p class="text-gray-300"><strong>Looker Studio</strong> (Conhecimento)</p>
+                        </div>
+                        <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                             <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="excel-a" x1="7.533" x2="7.533" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient><linearGradient id="excel-b" x1="12.016" x2="12.016" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient><linearGradient id="excel-c" x1="16.467" x2="16.467" y1="2.001" y2="10.82" gradientTransform="matrix(1 0 0 -1 0 12.82)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#28b44a"/><stop offset=".443" stop-color="#21a33f"/><stop offset="1" stop-color="#188330"/></linearGradient></defs><path fill="#107c41" d="M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.535-1.465C2 19.072 2 16.714 2 12s0-7.071 1.465-8.535C4.928 2 7.286 2 12 2s7.071 0 8.535 1.465C22 4.928 22 7.286 22 12Z"/><path fill="#fff" d="m14.5 12.25-3.53-6.2H8.2l3.53 6.2-3.53 6.2h2.77l2.2-3.86 2.2 3.86h2.77l-3.54-6.2 3.54-6.2h-2.77Z"/><path d="M7.533 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-a)" d="M5.166 10.82V2H10v8.82z"/><path d="M12.016 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-b)" d="M9.649 10.82V2h4.834v8.82z"/><path d="M16.467 2.001h8.82v8.82h-8.82z"/><path fill="url(#excel-c)" d="M14.1 10.82V2h4.834v8.82z"/></svg>
+                            <p class="text-gray-300"><strong>Microsoft Excel</strong> (Avançado)</p>
+                        </div>
+                         <div class="bg-card border border-card rounded-lg p-4 flex items-center">
+                            <svg class="skill-icon text-blue-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.63 16.44a1.05 1.05 0 0 0 1.08.73c.42 0 .78-.23.96-.6l1.06-2.1c.39-.78.96-1.25 1.7-1.4v3.13c-.9.27-1.55.9-1.55 1.84 0 1.05.85 1.9 1.9 1.9s1.9-.85 1.9-1.9c0-.94-.65-1.57-1.55-1.84V9.8c.9-.23 1.55-.86 1.55-1.84 0-1.05-.85-1.9-1.9-1.9s-1.9.85-1.9 1.9c0 .98.65 1.61 1.55 1.84v2.8c-.74.15-1.3.62-1.7 1.4l-1.06 2.1c-.18.37-.54.6-.96.6a1.05 1.05 0 0 0-1.08.73zM19.37 8.56a1.05 1.05 0 0 0-1.08-.73c-.42 0-.78.23-.96.6l-1.06 2.1c-.4.78-.96 1.25-1.7 1.4V9.8c.9-.23 1.55-.86 1.55-1.84 0-1.05-.85-1.9-1.9-1.9s-1.9.85-1.9 1.9c0 .98.65 1.61 1.55 1.84v4.3c-.9.27-1.55.9-1.55 1.84 0 1.05.85 1.9 1.9 1.9s1.9-.85 1.9-1.9c0-.94-.65-1.57-1.55-1.84v-2.8c.74-.15 1.3-.62 1.7-1.4l1.06-2.1c.18-.37-.54-.6-.96-.6a1.05 1.05 0 0 0 1.08-.73z"/></svg>
+                            <p class="text-gray-300"><strong>SQL</strong> (Avançado)</p>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Análise de Negócio e BI -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Análise de Negócio e BI</h3>
+                    <div class="bg-card border border-card rounded-xl p-6">
+                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
+                            <li>Definição de Métricas de Negócio e KPIs</li>
+                            <li>Análise Descritiva</li>
+                            <li>Modelagem de Dados</li>
+                            <li>SAP BusinessObjects (Intermediário)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Linguagens e Bancos de Dados -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Linguagens e Bancos de Dados</h3>
+                     <div class="bg-card border border-card rounded-xl p-6">
+                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
+                           <li>MySQL</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Bibliotecas Python -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Bibliotecas Python</h3>
+                    <div class="bg-card border border-card rounded-xl p-6">
+                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
+                            <li>Pandas & NumPy (Manipulação de Dados)</li>
+                            <li>Matplotlib, Seaborn & Plotly (Visualização)</li>
+                            <li>Scikit-learn (Machine Learning)</li>
+                            <li>Selenium & Requests (Automação e Coleta)</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Big Data e Machine Learning -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Big Data e Machine Learning</h3>
+                     <div class="bg-card border border-card rounded-xl p-6">
+                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
+                           <li>Conceitos e Ferramentas: Hadoop, Spark, PySpark.</li>
+                           <li>Modelagem Preditiva: Conhecimento em algoritmos e aplicação com Scikit-learn.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Ferramentas Corporativas e Produtividade -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-gradient">Ferramentas Corporativas e Produtividade</h3>
+                     <div class="bg-card border border-card rounded-xl p-6">
+                        <ul class="space-y-3 text-gray-300 list-disc list-inside">
+                            <li>ERP e Processos: SAP ERP (Usuário), Pipefy (Avançado).</li>
+                            <li>Planilhas: Google Sheets.</li>
+                            <li>Outras: Pacote Office (Avançado), Adobe Photoshop (Intermediário), Ferramentas de IA Generativa (ChatGPT, Gemini, Copilot).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="container mx-auto px-6 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Experiência Profissional</h2>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Experience Item -->
+                <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                        <h3 class="font-bold text-xl text-white">Assistente de sinistros</h3>
+                        <span class="text-sm text-gray-400 whitespace-nowrap">Outubro/2019 - Atual</span>
+                    </div>
+                    <p class="text-blue-400 font-medium mt-1">Localiza - L&CO</p>
+                    <ul class="list-disc list-inside mt-4 text-gray-300 space-y-2">
+                        <li>Desenvolvimento e automação de relatórios estratégicos em SQL, fornecendo à liderança painéis que reduziram o tempo de análise manual e agilizam a tomada de decisão.</li>
+                        <li>Estruturação de um novo processo de auditoria de sinistros, que levou à recuperação de valores significativos anteriormente considerados como perda operacional.</li>
+                        <li>Análise contínua do ciclo de vida dos processos de sinistro, identificando gargalos e propondo melhorias que otimizam o fluxo de trabalho.</li>
+                        <li>Criação e execução de projetos de automação de tarefas repetitivas utilizando Python para ganho de produtividade sobre trabalhos que eram realizados de forma manual que levavam até quatro horas por dia para conclusão.</li>
+                    </ul>
+                </div>
+                 <!-- Experience Item -->
+                <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                        <h3 class="font-bold text-xl text-white">Auxiliar administrativo – Gestão de Sinistros</h3>
+                        <span class="text-sm text-gray-400 whitespace-nowrap">Março/2018 – Outubro/2019</span>
+                    </div>
+                    <p class="text-blue-400 font-medium mt-1">Localiza - L&CO</p>
+                     <ul class="list-disc list-inside mt-4 text-gray-300 space-y-2">
+                        <li>Apoio fundamental na reestruturação das planilhas de controle de cobrança, centralizando informações e melhorando a acurácia dos dados.</li>
+                        <li>Utilização do SAP BO para extrair e consolidar dados, gerando relatórios operacionais que davam suporte às decisões da equipe.</li>
+                        <li>Atuação como ponto de contato para filiais, esclarecendo dúvidas sobre processos e garantindo a padronização dos procedimentos.</li>
+                        <li>Análise de processos de sinistro para cobrança de clientes.</li>
+                    </ul>
+                </div>
+                <!-- LinkedIn CTA -->
+                <div class="text-center pt-6">
+                    <p class="text-gray-400">
+                        Experiências anteriores disponíveis via LinkedIn.
+                    </p>
+                    <a href="https://www.linkedin.com/in/vitor-barbosa-318816232" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-2 font-semibold hover:underline">
+                        <span>Acessar Perfil no LinkedIn</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container mx-auto px-6 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Projetos Relevantes</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Project Card -->
+                <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Pipeline de Dados ETL com Python</h3>
+                    <p class="text-gray-400 text-sm flex-grow">Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
+                    <div class="mt-4">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Engenharia de Dados</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">ETL</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Pandas</span>
+                    </div>
+                    <a href="https://github.com/vitorbgomes/Analise_Dados_Python" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
+                        Ver no Github
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+                 <!-- Project Card -->
+                <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Análise de Vendas com SQL Avançado</h3>
+                    <p class="text-gray-400 text-sm flex-grow">Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.</p>
+                    <div class="mt-4">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Análise de Dados</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">BI</span>
+                    </div>
+                     <a href="https://github.com/vitorbgomes/Analise_Dados_SQL" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
+                        Ver no Github
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Courses Section -->
+        <section id="education" class="container mx-auto px-6 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Formação e Cursos</h2>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <h3 class="font-bold text-xl text-white">Graduação em Análise e Desenvolvimento de Sistemas</h3>
+                    <p class="text-blue-400 font-medium mt-1">Multivix | Conclusão em 2027</p>
+                </div>
+                <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <h3 class="font-bold text-xl text-white">Análise de Dados – Curso Profissionalizante</h3>
+                    <p class="text-blue-400 font-medium mt-1">EBAC | Conclusão em 2025</p>
+                </div>
+                 <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <h3 class="font-bold text-xl text-white">Power BI: Dashboards e Visualizações</h3>
+                    <p class="text-blue-400 font-medium mt-1">EBAC | Em andamento</p>
+                </div>
+                 <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <h3 class="font-bold text-xl text-white">Automação de Processos do Pipefy</h3>
+                    <p class="text-blue-400 font-medium mt-1">Pipefy Academy | Concluído</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Language Section -->
+        <section id="language-footer" class="container mx-auto px-6 py-10">
+             <div class="max-w-4xl mx-auto bg-card border border-card rounded-xl p-8 shadow-glow text-center">
+                <h3 class="text-2xl font-bold mb-2">Idiomas</h3>
+                <p class="text-gray-300 text-lg">
+                    Inglês Avançado (C1)
+                </p>
+                <a href="https://cert.efset.org/pt/4Uj8Xf" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-2 font-semibold hover:underline">
+                    <span>Ver Certificado</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="border-t border-card mt-20">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p class="text-2xl font-bold text-white mb-2">Vamos conversar?</p>
+            <p>Estou sempre aberto a novas oportunidades e colaborações.</p>
+            <div class="my-4 space-y-2">
+                 <a href="mailto:vitorvb97@gmail.com" class="text-xl text-blue-400 hover:underline">vitorvb97@gmail.com</a>
+                 <p>(31) 99640-4699</p>
+                 <p>Belo Horizonte, MG</p>
+            </div>
+            <div class="flex justify-center gap-6 mt-4">
+                <a href="https://www.linkedin.com/in/vitor-barbosa-318816232" target="_blank" class="text-gray-400 hover:text-white transition-colors">LinkedIn</a>
+                <a href="https://github.com/vitorbgomes" target="_blank" class="text-gray-400 hover:text-white transition-colors">Github</a>
+            </div>
+            <p class="text-sm mt-8">&copy; 2024 Vitor Barbosa. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
 </body>
 </html>

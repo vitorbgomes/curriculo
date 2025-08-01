@@ -120,6 +120,26 @@
             border-radius: 9999px;
             display: inline-block;
         }
+        /* Estilos para o conteúdo do PDF */
+        #pdf-content-wrapper {
+            position: absolute;
+            left: -9999px; /* Move o conteúdo para fora do ecrã */
+            top: -9999px;
+            background: white;
+            width: 210mm; /* Largura de uma folha A4 */
+        }
+        #pdf-content {
+            font-family: 'Inter', sans-serif;
+            color: #111827;
+            padding: 1in;
+            background: white;
+        }
+        #pdf-content h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        #pdf-content h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem; }
+        #pdf-content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1rem; }
+        #pdf-content p, #pdf-content li { font-size: 0.9rem; line-height: 1.6; }
+        #pdf-content ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem; }
+        #pdf-content .contact-info { margin-bottom: 1.5rem; text-align: center; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -327,13 +347,27 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <!-- Project Card -->
                 <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Análise Preditiva de Sinistros Automotivos com Machine Learning</h3>
+                    <p class="text-gray-400 text-sm flex-grow">Desenvolvi um projeto de ponta a ponta para transformar dados públicos de sinistros de trânsito (PRF) em inteligência de negócio para seguradoras e locadoras de veículos. O projeto incluiu a criação de um pipeline de dados para extração e limpeza, o desenvolvimento de um modelo de Machine Learning (Random Forest) para prever a gravidade dos acidentes com alta precisão, e a identificação dos principais fatores de risco. Os resultados foram consolidados em dashboards interativos no Looker Studio, fornecendo insights acionáveis para otimização de rotas, precificação de risco e redução de perdas operacionais.</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Machine Learning</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Scikit-learn</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Looker Studio</span>
+                    </div>
+                    <a href="https://vitorbgomes.github.io/Analise-de-Sinistros" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
+                        Ver no Github
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+                <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
                     <h3 class="font-bold text-xl mb-2">Pipeline de Dados ETL com Python</h3>
                     <p class="text-gray-400 text-sm flex-grow">Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
-                    <div class="mt-4">
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Engenharia de Dados</span>
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">ETL</span>
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Python</span>
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Pandas</span>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Engenharia de Dados</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">ETL</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Pandas</span>
                     </div>
                     <a href="https://github.com/vitorbgomes/Analise_Dados_Python" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
                         Ver no Github
@@ -344,10 +378,10 @@
                 <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
                     <h3 class="font-bold text-xl mb-2">Análise de Vendas com SQL Avançado</h3>
                     <p class="text-gray-400 text-sm flex-grow">Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.</p>
-                    <div class="mt-4">
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Análise de Dados</span>
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
-                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">BI</span>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Análise de Dados</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">SQL</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">BI</span>
                     </div>
                      <a href="https://github.com/vitorbgomes/Analise_Dados_SQL" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
                         Ver no Github
@@ -378,6 +412,10 @@
                  <div class="bg-card border border-card rounded-xl p-6 md:p-8">
                     <h3 class="font-bold text-xl text-white">Automação de Processos do Pipefy</h3>
                     <p class="text-blue-400 font-medium mt-1">Pipefy Academy | Concluído</p>
+                </div>
+                <div class="bg-card border border-card rounded-xl p-6 md:p-8">
+                    <h3 class="font-bold text-xl text-white">Python Bot - Automatizando Tarefas Usando Python</h3>
+                    <p class="text-blue-400 font-medium mt-1">Udemy | 2025</p>
                 </div>
             </div>
         </section>
@@ -440,7 +478,13 @@
             const resumeText = {
                 header: "Vitor Barbosa",
                 contact: [
-                    "Linkedin | GitHub | Portfólio",
+                    { text: "Linkedin", url: "https://www.linkedin.com/in/vitor-barbosa-318816232" },
+                    { text: " | " },
+                    { text: "GitHub", url: "https://github.com/vitorbgomes" },
+                    { text: " | " },
+                    { text: "Portfólio", url: "https://vitorbgomes.github.io/curriculo/" }
+                ],
+                contact_details: [
                     "(31) 99640-4699 | vitorvb97@gmail.com",
                     "Fernão Dias – Belo Horizonte – Minas Gerais | 20/09/1998"
                 ],
@@ -471,23 +515,32 @@
                             "Análise de processos de sinistro para cobrança de clientes."
                           ]
                         },
-                         "Experiências anteriores disponíveis via LinkedIn."
+                         { text: "Experiências anteriores disponíveis via LinkedIn.", url: "https://www.linkedin.com/in/vitor-barbosa-318816232" }
                     ]},
                     { title: "PROJETOS RELEVANTES", content: [
+                        { subtitle: "Análise Preditiva de Sinistros Automotivos com Machine Learning",
+                          points: [
+                            "Descrição: Desenvolvi um projeto de ponta a ponta para transformar dados públicos de sinistros de trânsito (PRF) em inteligência de negócio para seguradoras e locadoras de veículos. O projeto incluiu a criação de um pipeline de dados para extração e limpeza, o desenvolvimento de um modelo de Machine Learning (Random Forest) para prever a gravidade dos acidentes com alta precisão, e a identificação dos principais fatores de risco. Os resultados foram consolidados em dashboards interativos no Looker Studio, fornecendo insights acionáveis para otimização de rotas, precificação de risco e redução de perdas operacionais.",
+                            "Competências: Análise de Dados, Machine Learning, Python, Pandas, Scikit-learn, Visualização de Dados, Business Intelligence (BI), Looker Studio.",
+                            { text: "Link para o projeto", url: "https://vitorbgomes.github.io/Analise-de-Sinistros" }
+                          ]
+                        },
                         { subtitle: "Pipeline de Dados ETL com Python",
                           points: [
                             "Descrição: Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.",
-                            "Competências: Engenharia de Dados, ETL, Python, Pandas."
+                            "Competências: Engenharia de Dados, ETL, Python, Pandas.",
+                             { text: "Link para o projeto", url: "https://github.com/vitorbgomes/Analise_Dados_Python" }
                           ]
                         },
                          { subtitle: "Análise de Vendas com SQL Avançado",
                           points: [
                             "Descrição: Realizei uma análise exploratória no banco de dados Northwind, aplicando SQL avançado para segmentar clientes, analisar o desempenho de produtos e extrair insights de negócio através de queries complexas com JOINs, Subqueries e Funções de Agregação.",
-                            "Competências: Análise de Dados, SQL, Modelagem de Dados, Business Intelligence."
+                            "Competências: Análise de Dados, SQL, Modelagem de Dados, Business Intelligence.",
+                             { text: "Link para o projeto", url: "https://github.com/vitorbgomes/Analise_Dados_SQL" }
                           ]
                         }
                     ]},
-                    { title: "IDIOMAS", content: ["Inglês Avançado (C1) – Certificado: EFSET"] },
+                    { title: "IDIOMAS", content: [{ text: "Inglês Avançado (C1) – Certificado: EFSET", url: "https://cert.efset.org/pt/4Uj8Xf" }] },
                     { title: "COMPETÊNCIAS", content: [
                         { subtitle: "Análise de Negócio e BI (Business Intelligence)",
                           points: [
@@ -519,7 +572,8 @@
                     ]},
                     { title: "CURSOS/ATIVIDADES COMPLEMENTARES", content: [
                         "Power BI: Dashboards e Visualizações | EBAC | 2025 (em andamento)",
-                        "Automação de Processos do Pipefy | Pipefy Academy | 2025"
+                        "Automação de Processos do Pipefy | Pipefy Academy | 2025",
+                        "Python Bot - Automatizando Tarefas Usando Python | Udemy | 2025"
                     ]}
                 ]
             };
@@ -535,7 +589,27 @@
             cursorY += 30;
 
             doc.setFontSize(9).setFont(undefined, 'normal');
-            resumeText.contact.forEach(line => {
+            
+            // Renderizar links do cabeçalho
+            let currentX = margin;
+            const linkLine = resumeText.contact.map(l => l.text).join('');
+            currentX = (pageWidth - doc.getTextWidth(linkLine)) / 2;
+
+            resumeText.contact.forEach(link => {
+                if (link.url) {
+                    doc.setTextColor(0, 0, 255);
+                    doc.textWithLink(link.text, currentX, cursorY, { url: link.url });
+                } else {
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(link.text, currentX, cursorY);
+                }
+                currentX += doc.getTextWidth(link.text);
+            });
+            cursorY += 12;
+            doc.setTextColor(0, 0, 0);
+
+
+            resumeText.contact_details.forEach(line => {
                 doc.text(line, pageWidth / 2, cursorY, { align: 'center' });
                 cursorY += 12;
             });
@@ -543,7 +617,7 @@
 
             // Adicionar Seções
             resumeText.sections.forEach(section => {
-                if (cursorY > doc.internal.pageSize.getHeight() - margin) {
+                if (cursorY > doc.internal.pageSize.getHeight() - 60) {
                     doc.addPage();
                     cursorY = margin;
                 }
@@ -554,22 +628,43 @@
                 cursorY += 20;
 
                 section.content.forEach(item => {
+                    if (cursorY > doc.internal.pageSize.getHeight() - 60) {
+                        doc.addPage();
+                        cursorY = margin;
+                    }
                     if (typeof item === 'string') {
                         doc.setFontSize(10).setFont(undefined, 'normal');
                         const lines = doc.splitTextToSize(item, usableWidth);
                         doc.text(lines, margin, cursorY);
                         cursorY += lines.length * 12;
-                    } else if (typeof item === 'object') {
+                    } else if (item.url) { // Para links simples
+                         doc.setFontSize(10).setFont(undefined, 'normal').setTextColor(0,0,255);
+                         doc.textWithLink(item.text, margin, cursorY, { url: item.url });
+                         doc.setTextColor(0,0,0);
+                         cursorY += 12;
+                    } else if (item.subtitle) { // Para objetos com subtítulo e pontos
                         cursorY += 5;
                         doc.setFontSize(11).setFont(undefined, 'bold');
-                        doc.text(item.subtitle, margin, cursorY);
-                        cursorY += 15;
+                        const subLines = doc.splitTextToSize(item.subtitle, usableWidth);
+                        doc.text(subLines, margin, cursorY);
+                        cursorY += subLines.length * 14;
                         
                         item.points.forEach(point => {
-                             doc.setFontSize(10).setFont(undefined, 'normal');
-                             const pointLines = doc.splitTextToSize(`• ${point}`, usableWidth - 10);
-                             doc.text(pointLines, margin + 10, cursorY);
-                             cursorY += pointLines.length * 12 + 2;
+                             if (cursorY > doc.internal.pageSize.getHeight() - 60) {
+                                doc.addPage();
+                                cursorY = margin;
+                            }
+                             if(typeof point === 'object' && point.url) {
+                                doc.setFontSize(10).setFont(undefined, 'normal').setTextColor(0,0,255);
+                                doc.textWithLink(point.text, margin + 10, cursorY, { url: point.url });
+                                doc.setTextColor(0,0,0);
+                                cursorY += 12;
+                             } else {
+                                doc.setFontSize(10).setFont(undefined, 'normal');
+                                const pointLines = doc.splitTextToSize(`• ${point}`, usableWidth - 10);
+                                doc.text(pointLines, margin + 10, cursorY);
+                                cursorY += pointLines.length * 12 + 2;
+                             }
                         });
                     }
                     cursorY += 5;

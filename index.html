@@ -120,26 +120,6 @@
             border-radius: 9999px;
             display: inline-block;
         }
-        /* Estilos para o conteúdo do PDF */
-        #pdf-content-wrapper {
-            position: absolute;
-            left: -9999px; /* Move o conteúdo para fora do ecrã */
-            top: -9999px;
-            background: white;
-            width: 210mm; /* Largura de uma folha A4 */
-        }
-        #pdf-content {
-            font-family: 'Inter', sans-serif;
-            color: #111827;
-            padding: 1in;
-            background: white;
-        }
-        #pdf-content h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
-        #pdf-content h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem; }
-        #pdf-content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1rem; }
-        #pdf-content p, #pdf-content li { font-size: 0.9rem; line-height: 1.6; }
-        #pdf-content ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem; }
-        #pdf-content .contact-info { margin-bottom: 1.5rem; text-align: center; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -361,6 +341,19 @@
                     </a>
                 </div>
                 <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Python Automation Suite com Selenium</h3>
+                    <p class="text-gray-400 text-sm flex-grow">Conjunto de robôs desenvolvidos com Python e Selenium para automatizar tarefas do dia a dia, como inscrição em formulários, download de documentos fiscais, envio de mensagens no WhatsApp Web, conversão de XML para Excel e organização de arquivos. Projetado para aumentar a produtividade de forma prática e aplicável em contextos reais.</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Automação</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="inline-block bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Selenium</span>
+                    </div>
+                    <a href="https://github.com/vitorbgomes/Robos-de-Automacao-com-Python--Produtividade-na-Pratica" target="_blank" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mt-4 font-semibold">
+                        Ver no Github
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+                <div class="bg-card border border-card rounded-xl p-6 hover:border-blue-500 transition-all duration-300 flex flex-col">
                     <h3 class="font-bold text-xl mb-2">Pipeline de Dados ETL com Python</h3>
                     <p class="text-gray-400 text-sm flex-grow">Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.</p>
                     <div class="mt-4 flex flex-wrap gap-2">
@@ -463,6 +456,10 @@
                 format: 'a4'
             });
 
+            // Adiciona uma fonte padrão que suporta a maioria dos caracteres.
+            // A jsPDF tem fontes base como 'Helvetica', 'Times', 'Courier' que não precisam ser carregadas.
+            doc.setFont('Helvetica', 'normal');
+
             const downloadBtn = document.getElementById('download-btn');
             const originalBtnText = downloadBtn.innerHTML;
             
@@ -525,6 +522,12 @@
                             { text: "Link para o projeto", url: "https://vitorbgomes.github.io/Analise-de-Sinistros" }
                           ]
                         },
+                        { subtitle: "Python Automation Suite com Selenium",
+                          points: [
+                            "Descrição: Conjunto de robôs desenvolvidos com Python e Selenium para automatizar tarefas do dia a dia, como inscrição em formulários, download de documentos fiscais, envio de mensagens no WhatsApp Web, conversão de XML para Excel e organização de arquivos. Projetado para aumentar a produtividade de forma prática e aplicável em contextos reais.",
+                             { text: "Link para o projeto", url: "https://github.com/vitorbgomes/Robos-de-Automacao-com-Python--Produtividade-na-Pratica" }
+                          ]
+                        },
                         { subtitle: "Pipeline de Dados ETL com Python",
                           points: [
                             "Descrição: Construí um pipeline de dados completo (ETL) em Python para coletar, via API, dados não estruturados. Utilizei Pandas para a limpeza e transformação dos dados.",
@@ -584,11 +587,11 @@
             const usableWidth = pageWidth - (margin * 2);
 
             // Adicionar Cabeçalho
-            doc.setFontSize(24).setFont(undefined, 'bold');
+            doc.setFontSize(24).setFont('Helvetica', 'bold');
             doc.text(resumeText.header, pageWidth / 2, cursorY, { align: 'center' });
             cursorY += 30;
 
-            doc.setFontSize(9).setFont(undefined, 'normal');
+            doc.setFontSize(9).setFont('Helvetica', 'normal');
             
             // Renderizar links do cabeçalho
             let currentX = margin;
@@ -621,7 +624,7 @@
                     doc.addPage();
                     cursorY = margin;
                 }
-                doc.setFontSize(14).setFont(undefined, 'bold');
+                doc.setFontSize(14).setFont('Helvetica', 'bold');
                 doc.text(section.title, margin, cursorY);
                 doc.setLineWidth(0.5);
                 doc.line(margin, cursorY + 2, pageWidth - margin, cursorY + 2);
@@ -633,18 +636,18 @@
                         cursorY = margin;
                     }
                     if (typeof item === 'string') {
-                        doc.setFontSize(10).setFont(undefined, 'normal');
+                        doc.setFontSize(10).setFont('Helvetica', 'normal');
                         const lines = doc.splitTextToSize(item, usableWidth);
                         doc.text(lines, margin, cursorY);
                         cursorY += lines.length * 12;
                     } else if (item.url) { // Para links simples
-                         doc.setFontSize(10).setFont(undefined, 'normal').setTextColor(0,0,255);
+                         doc.setFontSize(10).setFont('Helvetica', 'normal').setTextColor(0,0,255);
                          doc.textWithLink(item.text, margin, cursorY, { url: item.url });
                          doc.setTextColor(0,0,0);
                          cursorY += 12;
                     } else if (item.subtitle) { // Para objetos com subtítulo e pontos
                         cursorY += 5;
-                        doc.setFontSize(11).setFont(undefined, 'bold');
+                        doc.setFontSize(11).setFont('Helvetica', 'bold');
                         const subLines = doc.splitTextToSize(item.subtitle, usableWidth);
                         doc.text(subLines, margin, cursorY);
                         cursorY += subLines.length * 14;
@@ -655,12 +658,12 @@
                                 cursorY = margin;
                             }
                              if(typeof point === 'object' && point.url) {
-                                doc.setFontSize(10).setFont(undefined, 'normal').setTextColor(0,0,255);
+                                doc.setFontSize(10).setFont('Helvetica', 'normal').setTextColor(0,0,255);
                                 doc.textWithLink(point.text, margin + 10, cursorY, { url: point.url });
                                 doc.setTextColor(0,0,0);
                                 cursorY += 12;
                              } else {
-                                doc.setFontSize(10).setFont(undefined, 'normal');
+                                doc.setFontSize(10).setFont('Helvetica', 'normal');
                                 const pointLines = doc.splitTextToSize(`• ${point}`, usableWidth - 10);
                                 doc.text(pointLines, margin + 10, cursorY);
                                 cursorY += pointLines.length * 12 + 2;
